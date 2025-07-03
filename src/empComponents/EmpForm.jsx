@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import FormResuable from "./FormResuable";
 
-const EmpForm = () => {
-  const [item, setItem] = useState({
+const EmpForm = ({onAddEmployee}) => {
+  const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     email: "",
@@ -15,14 +15,26 @@ const EmpForm = () => {
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setItem((preItem) => ({
+    setFormData((preItem) => ({
       ...preItem,
       [name]: value,
     }));
   };
   const submitHandler = (e) => {
+    onAddEmployee(formData);
+    setFormData({
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      address: "",
+      age: "",
+      salary: "",
+      department: "",
+      position: "",
+    });
     e.preventDefault();
-    console.log("Submitted Data: ", item);
+    console.log("Submitted Data: ", formData);
   };
   return (
     <form
@@ -33,8 +45,8 @@ const EmpForm = () => {
 
       <FormResuable
         type="text"
-        name="fastname"
-        value={item.fastname}
+        name="firstname"
+        value={formData.firstname}
         onChange={handleChange}
         placeholder="Enter First Name"
         label="First Name"
@@ -44,7 +56,7 @@ const EmpForm = () => {
         placeholder="Enter Last Name"
         label="Last Name"
         name="lastname"
-        value={item.lastname}
+        value={formData.lastname}
         onChange={handleChange}
       />
       <FormResuable
@@ -52,7 +64,7 @@ const EmpForm = () => {
         placeholder="Enter Email"
         label="Email"
         name="email"
-        value={item.email}
+        value={formData.email}
         onChange={handleChange}
       />
       <FormResuable
@@ -60,7 +72,7 @@ const EmpForm = () => {
         placeholder="Enter Phone"
         label="Phone"
         name="phone"
-        value={item.phone}
+        value={formData.phone}
         onChange={handleChange}
       />
       <FormResuable
@@ -68,7 +80,7 @@ const EmpForm = () => {
         placeholder="Enter Address"
         label="Address"
         name="address"
-        value={item.address}
+        value={formData.address}
         onChange={handleChange}
       />
       <FormResuable
@@ -76,7 +88,7 @@ const EmpForm = () => {
         placeholder="Enter Age"
         label="Age"
         name="age"
-        value={item.age}
+        value={formData.age}
         onChange={handleChange}
       />
       <FormResuable
@@ -84,7 +96,7 @@ const EmpForm = () => {
         placeholder="Enter Salary"
         label="salary"
         name="salary"
-        value={item.salary}
+        value={formData.salary}
         onChange={handleChange}
       />
       <FormResuable
@@ -92,7 +104,7 @@ const EmpForm = () => {
         placeholder="Enter Department"
         label="Department"
         name="department"
-        value={item.department}
+        value={formData.department}
         onChange={handleChange}
       />
       <FormResuable
@@ -100,7 +112,7 @@ const EmpForm = () => {
         placeholder="Enter Position"
         label="Position"
         name="position"
-        value={item.position}
+        value={formData.position}
         onChange={handleChange}
       />
 
