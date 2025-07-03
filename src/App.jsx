@@ -1,14 +1,12 @@
-
-import React from 'react'
-import Emp from './empComponents/Emp'
+import React from "react";
+import Emp from "./empComponents/Emp";
 
 const App = () => {
   return (
     <div>
-      
-      <Emp></Emp>
+      <Emp />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
