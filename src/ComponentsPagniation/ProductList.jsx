@@ -1,41 +1,58 @@
 import React, { useEffect, useState } from "react";
+import ProductRecipesCard from "./ProductRecipesCard";
+import { size } from "./ulti";
+import Pagnations from "./Pagnations";
 
 const ProductList = () => {
-  const [productsList, SetProductsList] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchingRecipe = async () => {
       try {
-        const response = await fetch("https://dummyjson.com/products");
+        const response = await fetch("https://dummyjson.com/recipes");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
         const data = await response.json();
-        console.log(data);
-        SetProductsList(data.products);
+        setRecipes(data.recipes);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Errror in the fetching the data");
       }
     };
-    fetchProduct();
-  }, []);
-
+    fetchingRecipe();
+  }, [currentPage]);
+  // Logic for the page Calcuations on the according
+  const totalPages = Math.ceil(recipes.length / size);
+  const start = currentPage * size;
+  const end = start + size;
+  const handleGoBack = () => {
+    setCurrentPage((p) => p - 1);
+  };
+  const handleGoFront = () => {
+    setCurrentPage((p) => p + 1);
+  };
+  const handlePageChange = (n) => {
+    setCurrentPage(n);
+  };
   return (
-    <div>
-      <h1>Creating the pagnation for the project</h1>
-      {productsList.map((product) => (
-        <ul
-          key={product.id}
-          style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}
-        >
-          <h2>{product.title}</h2>
-          <p>{product.description}</p>
-          <p>Price: ${product.price}</p>
-          <img
-            src={product.thumbnail}
-            alt={product.title}
-            style={{ width: "100px", height: "100px" }}
-          />
-        </ul>
-      ))}
-    </div>
+    <>
+      <div className=" w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+        {recipes.slice(start, end).map((r) => (
+          <div key={r.id} className="flex">
+            <ProductRecipesCard image={r.image} name={r.name} instructions={r.instructions}/>
+          </div>
+        ))}
+      </div>
+      <Pagnations
+      
+        handleGoBack={handleGoBack}
+        handleGoFront={handleGoFront}
+        handlePageChange={handlePageChange}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+    </>
   );
 };
 
