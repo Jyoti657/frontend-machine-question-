@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { emp as initalData } from "./../data.js";
+import { emp as initalData } from "../data.js";
 import delete1 from "../assets/delete1.png";
 
 const EmpList = ({ employees, onDeleteEmployee, onSelectEmployee }) => {
